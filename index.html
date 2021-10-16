@@ -47,11 +47,118 @@
 					</section>
 					<section>
 						<h4>Solitary Unit Test</h4>
-						<img style="width: 50%;" src="assets/images/isolation_solitary.png" alt="solitary_unit_test">
+						<img src="assets/images/isolation_solitary.png" alt="solitary_unit_test">
 					</section>
 					<section>
 						<h4>Sociable Unit Test</h4>
 						<img src="assets/images/isolation_sociable.png" alt="sociable_unit_test">
+					</section>
+					<section>
+						<h5>Example </h5>
+						<p>Actual Code : </p>
+						<pre><code data-trim data-noescape>
+							// file user_model.go
+							type User struct {
+								//
+								// some fields
+								//
+							}
+
+							// file repository/user_repo.go
+							type UserRepository interface {
+								GetUsers() ([]User, error)
+							}
+							
+							type userRepositoryImpl struct{
+								Conn *sql.DB
+							}
+
+							func NewUserRepository(conn *sql.DB) UserRepository {
+								return &userRepositoryImpl{conn}
+							}
+
+							func (r *userRepositoryImpl) GetUsers() ([]User, error) {
+								result = make([]User, 0)
+								rows, err := r.Conn.Query(query, args...)
+								//
+								// do rows scan and err checking
+								///
+								return result, nil
+							}
+							
+							// file service/user_service.go
+							type UserService struct {
+								repository UserRepository
+							}
+							
+							func NewUserService(repository UserRepository) *UserService {
+								return &UserService{
+									repository: repository,
+								}
+							}
+							
+							func (c *UserService) ResolveUsers() (users []User, err error) {
+								users, err = c.repository.GetUsers()
+								//
+								// do something with user and err
+								//
+								return
+							}
+						</code></pre>
+					</section>
+					<section>
+						<h6>Example Solitary Unit Test</h6>
+						<pre><code data-trim data-noescape>
+							// file service/user_service_test.go
+							func TestResolveUsers(t *testing.T) {
+								// Arrange
+								users := []User{
+									{
+										// set the user data
+									}
+								}
+								repository := &mocks.UserRepository{}
+								repository.
+									On("GetUsers").
+									Return(users, nil).
+									Once()
+								service := NewUserService(repository)
+
+								// Act
+								userList, err := service.ResolveUsers()
+								
+								// Assert
+								assert.Nil(t, err)
+								assert.Equal(t, userList, 2)
+							}
+						</code></pre>
+					</section>
+					<section>
+						<h6>Example Sociable Unit Test</h6>
+						<pre><code data-trim data-noescape>
+							// file service/user_service_test.go
+							func TestResolveUsers(t *testing.T) {
+								// Arrange
+								// setup sql mock
+								db, mock, _ := sqlmock.New()
+								defer db.Close()
+								users := []User{
+									{
+										// set the user data
+									}
+								}
+								mock.ExpectQuery("SELECT ... ").WillReturnRows(users)
+								repository := NewUserRepository(db)
+								service := NewUserService(repository)
+
+								// Act
+								userList, err := service.ResolveUsers()
+								
+								// Assert
+								assert.Nil(t, err)
+								assert.Equal(t, userList, 2)
+							}
+						</code></pre>
 					</section>
 					<section>
 						<table>
