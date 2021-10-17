@@ -237,6 +237,72 @@
 				</section>
 				<section>
 					<section>
+						<h2>The Three Styles of Unit Testing</h2>
+					</section>
+					<section>
+						<ul>
+							<li>Output-based testing</li>
+							<li>State-based testing</li>
+							<li>Communication-based testing</li>
+						</ul>
+					</section>
+					<section>
+						<h3>The Output-based Testing</h3>
+						<p style="text-align: left;">You feed an input to the system under test (SUT) and check the output it produces</p>
+						<pre><code data-trim data-noescape>
+							func TestCalculateDiscount(t *testing.T){
+								product1 := Product{
+									// set the data
+								}
+								product2 := Product{
+									// set the data
+								}
+								priceService := service.NewPriceService()
+
+								discount := priceService.CalculateDiscount(product1, product2)
+
+								assert.Equal(t, 0.5, discount)
+							}
+						</code></pre>
+					</section>
+					<section>
+						<h3>The State-based Testing</h3>
+						<p style="text-align: left;">Verifying the state of the system after an operation is complete</p>
+						<pre><code data-trim data-noescape>
+							func TestAddProduct(t *testing.T) {
+								product := Product{
+									// set the data
+								}
+								productService := service.NewProductService()
+
+								productService.AddProduct(product)
+
+								assert.Equal(t, 1, productService.Count())
+							}
+						</code></pre>
+					</section>
+					<section>
+						<h3>The Communication-based Testing</h3>
+						<p style="text-align: left;">This style uses mocks to verify communications between the system under test and its collaborators</p>
+						<pre><code data-trim data-noescape>
+							func TestResolveUsers(t *testing.T) {
+								book := Book{
+									// set the book data
+								}
+								repository := &mocks.BookRepository{}
+								repository.
+									On("InsertBook", book).
+									Return(nil).
+									Once()
+								service := NewBookService(repository)
+
+								service.AddBook(book)
+							}
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
 						<h2>The Goal of Unit Testing</h2>
 					</section>
 					<section>
