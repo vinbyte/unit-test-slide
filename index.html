@@ -129,7 +129,7 @@
 								
 								// Assert
 								assert.Nil(t, err)
-								assert.Equal(t, userList, 2)
+								assert.Len(t, userList, 2)
 							}
 						</code></pre>
 					</section>
@@ -156,7 +156,7 @@
 								
 								// Assert
 								assert.Nil(t, err)
-								assert.Equal(t, userList, 2)
+								assert.Len(t, userList, 2)
 							}
 						</code></pre>
 					</section>
@@ -204,6 +204,35 @@
 							<li>Call your method under test (Act)</li>
 							<li>Assert that the expected results are returned (Assert)</li>
 						</ul>
+					</section>
+					<section>
+						<h3>Arrange</h3>
+						<pre><code data-trim data-noescape>
+							users := []User{
+								{
+									// set the user data
+								}
+							}
+							repository := &mocks.UserRepository{}
+							repository.
+								On("GetUsers").
+								Return(users, nil).
+								Once()
+							service := NewUserService(repository)
+						</code></pre>
+					</section>
+					<section>
+						<h3>Act</h3>
+						<pre><code data-trim data-noescape>
+							userList, err := service.ResolveUsers()
+						</code></pre>
+					</section>
+					<section>
+						<h3>Assert</h3>
+						<pre><code data-trim data-noescape>
+							assert.Nil(t, err)
+							assert.Len(t, userList, 2)
+						</code></pre>
 					</section>
 				</section>
 				<section>
