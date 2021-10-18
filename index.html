@@ -338,9 +338,9 @@
 							</div>
 							<div class="content">
 								<ul>
-									<li>Output-based testing</li>
-									<li>State-based testing</li>
-									<li>Communication-based testing</li>
+									<li>Output-based testing : Feed an input to the system under test (SUT) and check the output it produces</li>
+									<li>State-based testing : Verifying the state of the system after an operation is complete</li>
+									<li>Communication-based testing : This style uses mocks to verify communications between the system under test and its collaborators</li>
 								</ul>
 							</div>
 						</div>
@@ -350,26 +350,23 @@
 							<div class="header">
 								<div class="section">The Output-based Testing</div>
 							</div>
-							<div class="content">
-								<p>You feed an input to the system under test (SUT) and check the output it produces</p>
-								<figure class="code">
-									<pre><code data-trim data-noescape>
-										func TestCalculateDiscount(t *testing.T){
-											product1 := Product{
-												// set the data
-											}
-											product2 := Product{
-												// set the data
-											}
-											priceService := service.NewPriceService()
-			
-											discount := priceService.CalculateDiscount(product1, product2)
-			
-											assert.Equal(t, 0.5, discount)
+							<figure class="code">
+								<pre><code data-trim data-noescape>
+									func TestCalculateDiscount(t *testing.T){
+										product1 := Product{
+											// set the data
 										}
-									</code></pre>
-								</figure>
-							</div>
+										product2 := Product{
+											// set the data
+										}
+										priceService := service.NewPriceService()
+		
+										discount := priceService.CalculateDiscount(product1, product2)
+		
+										assert.Equal(t, 0.5, discount)
+									}
+								</code></pre>
+							</figure>
 						</div>
 					</section>
 					<section class="code color--dark">
@@ -377,23 +374,20 @@
 							<div class="header">
 								<div class="section">The State-based Testing</div>
 							</div>
-							<div class="content">
-								<p>Verifying the state of the system after an operation is complete</p>
-								<figure class="code">
-									<pre><code data-trim data-noescape>
-										func TestAddProduct(t *testing.T) {
-											product := Product{
-												// set the data
-											}
-											productService := service.NewProductService()
-			
-											productService.AddProduct(product)
-			
-											assert.Equal(t, 1, productService.Count())
+							<figure class="code">
+								<pre><code data-trim data-noescape>
+									func TestAddProduct(t *testing.T) {
+										product := Product{
+											// set the data
 										}
-									</code></pre>
-								</figure>
-							</div>
+										productService := service.NewProductService()
+		
+										productService.AddProduct(product)
+		
+										assert.Equal(t, 1, productService.Count())
+									}
+								</code></pre>
+							</figure>
 						</div>
 					</section>
 					<section class="code color--dark">
@@ -401,26 +395,23 @@
 							<div class="header">
 								<div class="section">The Communication-based Testing</div>
 							</div>
-							<div class="content">
-								<p>This style uses mocks to verify communications between the system under test and its collaborators</p>
-								<figure class="code">
-									<pre><code data-trim data-noescape>
-										func TestResolveUsers(t *testing.T) {
-											book := Book{
-												// set the book data
-											}
-											repository := &mocks.BookRepository{}
-											repository.
-												On("InsertBook", book).
-												Return(nil).
-												Once()
-											service := NewBookService(repository)
-			
-											service.AddBook(book)
+							<figure class="code">
+								<pre><code data-trim data-noescape>
+									func TestResolveUsers(t *testing.T) {
+										book := Book{
+											// set the book data
 										}
-									</code></pre>
-								</figure>
-							</div>
+										repository := &mocks.BookRepository{}
+										repository.
+											On("InsertBook", book).
+											Return(nil).
+											Once()
+										service := NewBookService(repository)
+		
+										service.AddBook(book)
+									}
+								</code></pre>
+							</figure>
 						</div>
 					</section>
 				</section>
