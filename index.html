@@ -8,321 +8,464 @@
 
 		<link rel="stylesheet" href="reveal.js/dist/reset.css">
 		<link rel="stylesheet" href="reveal.js/dist/reveal.css">
-		<link rel="stylesheet" href="reveal.js/dist/theme/solarized.css">
+		<link rel="stylesheet" href="assets/css/theme/myplanet.css">
 
 		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="reveal.js/plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="reveal.js/plugin/highlight/zenburn.css">
 	</head>
 	<body>
-		<div class="reveal">
+		<div class="reveal pattern--random">
 			<div class="slides">
-				<section>
-					<header>
-						<h1>You Should Write Unit Test and Here’s Why</h1>
-					</header>
+				<section class="title" id="title">
+					<div class="grid-wrapper">
+						<div class="content">
+							<h1>Unit Test</h1>
+							<div class="description">
+								You Should Write Unit Test and Here’s Why.
+							</div>
+						</div>
+						<div class="credit">
+							<hr/>
+							<div class="label">Presented By</div>
+							<div class="name">Gavinda Kinandana</div>
+							<div class="role">Backend Engineer</div>
+						</div>
+					</div>
 				</section>
 				<section>
-					<section>
-						<h2>Test Pyramid</h2>
+					<section class="subsection color--ice">
+						<div class="grid-wrapper">
+							<h1>Test Pyramid</h1>
+						</div>
 					</section>
 					<section>
-						<img src="https://martinfowler.com/articles/practical-test-pyramid/testPyramid.png" alt="test_pyramid">
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">Test Pyramid</div>
+							</div>
+							<div class="content" style="text-align: center;">
+								<img src="https://martinfowler.com/articles/practical-test-pyramid/testPyramid.png" alt="test_pyramid">
+							</div>
+						</div>
 					</section>
 				</section>
 				<section>
-					<section>
-						<h2>What is unit test ?</h2>
+					<section class="subsection color--ice">
+						<div class="grid-wrapper">
+							<h1>What is unit test ?</h1>
+						</div>
 					</section>
 					<section>
-						<img src="https://martinfowler.com/articles/practical-test-pyramid/unitTest.png" alt="unit_test_concept">
-						<p style="text-align: left;">An automated test that</p>
-						<ul>
-							<li>Verifies a small piece of code (also known as a unit)</li>
-							<li>Does it quickly</li>
-							<li>And does it in an isolated manner</li>
-						</ul>
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">What is unit test ?</div>
+							</div>
+							<div class="content">
+								<img src="https://martinfowler.com/articles/practical-test-pyramid/unitTest.png" alt="unit_test_concept">
+								<p style="text-align: left;">An automated test that</p>
+								<ul>
+									<li>Verifies a small piece of code (also known as a unit)</li>
+									<li>Does it quickly</li>
+									<li>And does it in an isolated manner</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+				</section>
+				<section>
+					<section class="subsection color--ice">
+						<div class="grid-wrapper">
+							<h1>2 Types of Isolation</h1>
+						</div>
 					</section>
 					<section>
-						<h3>2 Types of Isolation</h3>
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">Solitary Unit Test</div>
+							</div>
+							<div class="content" style="text-align: center;">
+								<img src="assets/images/isolation_solitary.png" alt="solitary_unit_test">
+							</div>
+						</div>
 					</section>
-					<section>
-						<h4>Solitary Unit Test</h4>
-						<img src="assets/images/isolation_solitary.png" alt="solitary_unit_test">
+					<section cla>
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">Sociable Unit Test</div>
+							</div>
+							<div class="content" style="text-align: center;">
+								<img src="assets/images/isolation_sociable.png" alt="sociable_unit_test">
+							</div>
+						</div>
 					</section>
-					<section>
-						<h4>Sociable Unit Test</h4>
-						<img src="assets/images/isolation_sociable.png" alt="sociable_unit_test">
-					</section>
-					<section>
-						<h5>Example </h5>
-						<p>Actual Code : </p>
-						<pre><code data-trim data-noescape>
-							// file user_model.go
-							type User struct {
-								//
-								// some fields
-								//
-							}
-
-							// file repository/user_repo.go
-							type UserRepository interface {
-								GetUsers() ([]User, error)
-							}
-							
-							type userRepositoryImpl struct{
-								Conn *sql.DB
-							}
-
-							func NewUserRepository(conn *sql.DB) UserRepository {
-								return &userRepositoryImpl{conn}
-							}
-
-							func (r *userRepositoryImpl) GetUsers() ([]User, error) {
-								result = make([]User, 0)
-								rows, err := r.Conn.Query(query, args...)
-								//
-								// do rows scan and err checking
-								///
-								return result, nil
-							}
-							
-							// file service/user_service.go
-							type UserService struct {
-								repository UserRepository
-							}
-							
-							func NewUserService(repository UserRepository) *UserService {
-								return &UserService{
-									repository: repository,
-								}
-							}
-							
-							func (c *UserService) ResolveUsers() (users []User, err error) {
-								users, err = c.repository.GetUsers()
-								//
-								// do something with user and err
-								//
-								return
-							}
-						</code></pre>
-					</section>
-					<section>
-						<h6>Example Solitary Unit Test</h6>
-						<pre><code data-trim data-noescape>
-							// file service/user_service_test.go
-							func TestResolveUsers(t *testing.T) {
-								// Arrange
-								users := []User{
-									{
-										// set the user data
+					<section class="code color--dark">
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">Actual Code</div>
+							</div>
+							<figure class="code">
+								<pre><code data-trim data-noescape>
+									// file user_model.go
+									type User struct {
+										//
+										// some fields
+										//
 									}
-								}
-								repository := &mocks.UserRepository{}
-								repository.
-									On("GetUsers").
-									Return(users, nil).
-									Once()
-								service := NewUserService(repository)
 
-								// Act
-								userList, err := service.ResolveUsers()
-								
-								// Assert
-								assert.Nil(t, err)
-								assert.Len(t, userList, 2)
-							}
-						</code></pre>
-					</section>
-					<section>
-						<h6>Example Sociable Unit Test</h6>
-						<pre><code data-trim data-noescape>
-							// file service/user_service_test.go
-							func TestResolveUsers(t *testing.T) {
-								// Arrange
-								// setup sql mock
-								db, mock, _ := sqlmock.New()
-								defer db.Close()
-								users := []User{
-									{
-										// set the user data
+									// file repository/user_repo.go
+									type UserRepository interface {
+										GetUsers() ([]User, error)
 									}
-								}
-								mock.ExpectQuery("SELECT ... ").WillReturnRows(users)
-								repository := NewUserRepository(db)
-								service := NewUserService(repository)
+									
+									type userRepositoryImpl struct{
+										Conn *sql.DB
+									}
 
-								// Act
-								userList, err := service.ResolveUsers()
-								
-								// Assert
-								assert.Nil(t, err)
-								assert.Len(t, userList, 2)
-							}
-						</code></pre>
+									func NewUserRepository(conn *sql.DB) UserRepository {
+										return &userRepositoryImpl{conn}
+									}
+
+									func (r *userRepositoryImpl) GetUsers() ([]User, error) {
+										result = make([]User, 0)
+										rows, err := r.Conn.Query(query, args...)
+										//
+										// do rows scan and err checking
+										///
+										return result, nil
+									}
+									
+									// file service/user_service.go
+									type UserService struct {
+										repository UserRepository
+									}
+									
+									func NewUserService(repository UserRepository) *UserService {
+										return &UserService{
+											repository: repository,
+										}
+									}
+									
+									func (c *UserService) ResolveUsers() (users []User, err error) {
+										users, err = c.repository.GetUsers()
+										//
+										// do something with user and err
+										//
+										return
+									}
+								</code></pre>
+							</figure>
+						</div>
+					</section>
+					<section class="code color--dark">
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">Example Solitary Unit Test</div>
+							</div>
+							<figure class="code">
+								<pre><code data-trim data-noescape>
+									// file service/user_service_test.go
+									func TestResolveUsers(t *testing.T) {
+										// Arrange
+										users := []User{
+											{
+												// set the user data
+											}
+										}
+										repository := &mocks.UserRepository{}
+										repository.
+											On("GetUsers").
+											Return(users, nil).
+											Once()
+										service := NewUserService(repository)
+		
+										// Act
+										userList, err := service.ResolveUsers()
+										
+										// Assert
+										assert.Nil(t, err)
+										assert.Len(t, userList, 2)
+									}
+								</code></pre>
+							</figure>
+						</div>
+					</section>
+					<section class="code color--dark">
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">Example Sociable Unit Test</div>
+							</div>
+							<figure class="code">
+								<pre><code data-trim data-noescape>
+									// file service/user_service_test.go
+									func TestResolveUsers(t *testing.T) {
+										// Arrange
+										// setup sql mock
+										db, mock, _ := sqlmock.New()
+										defer db.Close()
+										users := []User{
+											{
+												// set the user data
+											}
+										}
+										mock.ExpectQuery("SELECT ... ").WillReturnRows(users)
+										repository := NewUserRepository(db)
+										service := NewUserService(repository)
+		
+										// Act
+										userList, err := service.ResolveUsers()
+										
+										// Assert
+										assert.Nil(t, err)
+										assert.Len(t, userList, 2)
+									}
+								</code></pre>
+							</figure>
+						</div>
 					</section>
 					<section>
-						<table>
-							<thead>
-								<th>Isolation Type</th>
-								<th>A unit is</th>
-								<th>Uses test doubles for</th>
-							</thead>
-							<tbody>
-								<tr>
-									<td>Solitary</td>
-									<td>A class</td>
-									<td>All but immutable dependencies</td>
-								</tr>
-								<tr>
-									<td>Sociable</td>
-									<td>A class or a set of classes</td>
-									<td>Shared dependencies</td>
-								</tr>
-							</tbody>
-						</table>
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">Solitary vs Sociable</div>
+							</div>
+							<div class="content" style="text-align: center;">
+								<table>
+									<thead>
+										<th>Isolation Type</th>
+										<th>A unit is</th>
+										<th>Uses test doubles for</th>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Solitary</td>
+											<td>A class</td>
+											<td>All but immutable dependencies</td>
+										</tr>
+										<tr>
+											<td>Sociable</td>
+											<td>A class or a set of classes</td>
+											<td>Shared dependencies</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</section>
 				</section>
 				<section>
-					<section>
-						<h2>What to Test ?</h2>
+					<section class="subsection color--ice">
+						<div class="grid-wrapper">
+							<h1>What to Test ?</h1>
+						</div>
 					</section>
 					<section>
-						<ul>
-							<li>One test class per production class</li>
-							<li>Test the public interface of the class</li>
-							<li>Don't test trivial code</li>
-						</ul>
-					</section>
-				</section>
-				<section>
-					<section>
-						<h2>Test Structure</h2>
-					</section>
-					<section>
-						<ul>
-							<li>Set up the test data (Arrange)</li>
-							<li>Call your method under test (Act)</li>
-							<li>Assert that the expected results are returned (Assert)</li>
-						</ul>
-					</section>
-					<section>
-						<h3>Arrange</h3>
-						<pre><code data-trim data-noescape>
-							users := []User{
-								{
-									// set the user data
-								}
-							}
-							repository := &mocks.UserRepository{}
-							repository.
-								On("GetUsers").
-								Return(users, nil).
-								Once()
-							service := NewUserService(repository)
-						</code></pre>
-					</section>
-					<section>
-						<h3>Act</h3>
-						<pre><code data-trim data-noescape>
-							userList, err := service.ResolveUsers()
-						</code></pre>
-					</section>
-					<section>
-						<h3>Assert</h3>
-						<pre><code data-trim data-noescape>
-							assert.Nil(t, err)
-							assert.Len(t, userList, 2)
-						</code></pre>
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">What to Test ?</div>
+							</div>
+							<div class="content">
+								<ul>
+									<li>One test class per production class</li>
+									<li>Test the public interface of the class</li>
+									<li>Don't test trivial code</li>
+								</ul>
+							</div>
+						</div>
 					</section>
 				</section>
 				<section>
-					<section>
-						<h2>The Three Styles of Unit Testing</h2>
+					<section class="subsection color--ice">
+						<div class="grid-wrapper">
+							<h1>Test Structure</h1>
+						</div>
 					</section>
 					<section>
-						<ul>
-							<li>Output-based testing</li>
-							<li>State-based testing</li>
-							<li>Communication-based testing</li>
-						</ul>
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">Test Structure</div>
+							</div>
+							<div class="content">
+								<ul>
+									<li>Set up the test data (Arrange)</li>
+									<li>Call your method under test (Act)</li>
+									<li>Assert that the expected results are returned (Assert)</li>
+								</ul>
+							</div>
+						</div>
 					</section>
-					<section>
-						<h3>The Output-based Testing</h3>
-						<p style="text-align: left;">You feed an input to the system under test (SUT) and check the output it produces</p>
-						<pre><code data-trim data-noescape>
-							func TestCalculateDiscount(t *testing.T){
-								product1 := Product{
-									// set the data
-								}
-								product2 := Product{
-									// set the data
-								}
-								priceService := service.NewPriceService()
-
-								discount := priceService.CalculateDiscount(product1, product2)
-
-								assert.Equal(t, 0.5, discount)
-							}
-						</code></pre>
-					</section>
-					<section>
-						<h3>The State-based Testing</h3>
-						<p style="text-align: left;">Verifying the state of the system after an operation is complete</p>
-						<pre><code data-trim data-noescape>
-							func TestAddProduct(t *testing.T) {
-								product := Product{
-									// set the data
-								}
-								productService := service.NewProductService()
-
-								productService.AddProduct(product)
-
-								assert.Equal(t, 1, productService.Count())
-							}
-						</code></pre>
-					</section>
-					<section>
-						<h3>The Communication-based Testing</h3>
-						<p style="text-align: left;">This style uses mocks to verify communications between the system under test and its collaborators</p>
-						<pre><code data-trim data-noescape>
-							func TestResolveUsers(t *testing.T) {
-								book := Book{
-									// set the book data
-								}
-								repository := &mocks.BookRepository{}
-								repository.
-									On("InsertBook", book).
-									Return(nil).
-									Once()
-								service := NewBookService(repository)
-
-								service.AddBook(book)
-							}
-						</code></pre>
+					<section class="code color--dark">
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">Test Structure</div>
+							</div>
+							<figure class="code">
+								<pre><code data-trim data-noescape>
+									func TestResolveUsers(t *testing.T) {
+										// Arrange
+										users := []User{
+											{
+												// some fields
+											}
+										}
+										repository := &mocks.UserRepository{}
+										repository.
+											On("GetUsers").
+											Return(users, nil).
+											Once()
+										service := NewUserService(repository)
+		
+										// Act
+										userList, err := service.ResolveUsers()
+										
+										// Assert
+										assert.Nil(t, err)
+										assert.Len(t, userList, 2)
+									}
+								</code></pre>
+							</figure>
+						</div>
 					</section>
 				</section>
 				<section>
-					<section>
-						<h2>The Goal of Unit Testing</h2>
+					<section class="subsection color--ice">
+						<div class="grid-wrapper">
+							<h1>The Three Styles of Unit Testing</h1>
+						</div>
 					</section>
 					<section>
-						<ul>
-							<li>Makes you confident that your changes won’t produce the nightmare bugs</li>
-							<li>Enable sustainable growth of the development</li>
-						</ul>
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">Test Structure</div>
+							</div>
+							<div class="content">
+								<ul>
+									<li>Output-based testing</li>
+									<li>State-based testing</li>
+									<li>Communication-based testing</li>
+								</ul>
+							</div>
+						</div>
 					</section>
-					<section>
-						<img src="assets/images/unit_test_graph.png" alt="unit_test_graph">
+					<section class="code color--dark">
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">The Output-based Testing</div>
+							</div>
+							<div class="content">
+								<p>You feed an input to the system under test (SUT) and check the output it produces</p>
+								<figure class="code">
+									<pre><code data-trim data-noescape>
+										func TestCalculateDiscount(t *testing.T){
+											product1 := Product{
+												// set the data
+											}
+											product2 := Product{
+												// set the data
+											}
+											priceService := service.NewPriceService()
+			
+											discount := priceService.CalculateDiscount(product1, product2)
+			
+											assert.Equal(t, 0.5, discount)
+										}
+									</code></pre>
+								</figure>
+							</div>
+						</div>
+					</section>
+					<section class="code color--dark">
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">The State-based Testing</div>
+							</div>
+							<div class="content">
+								<p>Verifying the state of the system after an operation is complete</p>
+								<figure class="code">
+									<pre><code data-trim data-noescape>
+										func TestAddProduct(t *testing.T) {
+											product := Product{
+												// set the data
+											}
+											productService := service.NewProductService()
+			
+											productService.AddProduct(product)
+			
+											assert.Equal(t, 1, productService.Count())
+										}
+									</code></pre>
+								</figure>
+							</div>
+						</div>
+					</section>
+					<section class="code color--dark">
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">The Communication-based Testing</div>
+							</div>
+							<div class="content">
+								<p>This style uses mocks to verify communications between the system under test and its collaborators</p>
+								<figure class="code">
+									<pre><code data-trim data-noescape>
+										func TestResolveUsers(t *testing.T) {
+											book := Book{
+												// set the book data
+											}
+											repository := &mocks.BookRepository{}
+											repository.
+												On("InsertBook", book).
+												Return(nil).
+												Once()
+											service := NewBookService(repository)
+			
+											service.AddBook(book)
+										}
+									</code></pre>
+								</figure>
+							</div>
+						</div>
 					</section>
 				</section>
 				<section>
-					<h2>Thank you</h2>
-					<p style="text-align: left;">References :</p>
-					<ul style="text-align: left;">
-						<li><a href="https://martinfowler.com/articles/practical-test-pyramid.html" target="_blank">https://martinfowler.com/articles/practical-test-pyramid.html</a></li>
-						<li><a href="https://martinfowler.com/bliki/UnitTest.html" target="_blank">https://martinfowler.com/bliki/UnitTest.html</a></li>
-						<li><a href="https://www.google.co.id/books/edition/Unit_Testing_Principles_Practices_and_Pa/rDszEAAAQBAJ?hl=id&gbpv=0" target="_blank">Unit Testing Principles, Practices, and Patterns</a></li>
-					</ul>
+					<section class="subsection color--ice">
+						<div class="grid-wrapper">
+							<h1>The Goal of Unit Testing</h1>
+						</div>
+					</section>
+					<section>
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">The Goal of Unit Testing</div>
+							</div>
+							<div class="content">
+								<ul>
+									<li>Makes you confident that your changes won’t produce the nightmare bugs</li>
+									<li>Enable sustainable growth of the development</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+					<section>
+						<div class="grid-wrapper">
+							<div class="header">
+								<div class="section">Enable sustainable growth of the development</div>
+							</div>
+							<div class="content" style="text-align: center;">
+								<img style="width: 50%;" src="assets/images/unit_test_graph.png" alt="unit_test_graph">
+							</div>
+						</div>
+					</section>
+				</section>
+				<section class="subsection color--dark">
+					<div class="grid-wrapper">
+						<h1>Thank you</h1>
+						<div class="description">
+							<p style="text-align: left;">References :</p>
+							<ul style="text-align: left;">
+								<li><a href="https://martinfowler.com/articles/practical-test-pyramid.html" target="_blank">https://martinfowler.com/articles/practical-test-pyramid.html</a></li>
+								<li><a href="https://martinfowler.com/bliki/UnitTest.html" target="_blank">https://martinfowler.com/bliki/UnitTest.html</a></li>
+								<li><a href="https://www.google.co.id/books/edition/Unit_Testing_Principles_Practices_and_Pa/rDszEAAAQBAJ?hl=id&gbpv=0" target="_blank">Unit Testing Principles, Practices, and Patterns</a></li>
+							</ul>
+						</div>
+					</div>
 				</section>
 			</div>
 		</div>
@@ -331,19 +474,6 @@
 		<script src="reveal.js/plugin/notes/notes.js"></script>
 		<script src="reveal.js/plugin/markdown/markdown.js"></script>
 		<script src="reveal.js/plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
-
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
-
-				// enable the slide number
-				slideNumber: 'c/t'
-			});
-		</script>
+		<script src="assets/js/reveal-init.js"></script>
 	</body>
 </html>
